@@ -22,10 +22,13 @@ configurations {
 repositories {
     mavenCentral()
 }
+//val logbackVersion = "1.3.0"
 
 dependencies {
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
     implementation("org.springframework.boot:spring-boot-starter-web")
+//    implementation("ch.qos.logback:logback-classic:$logbackVersion")
+//    implementation("ch.qos.logback:logback-core:$logbackVersion")
     compileOnly("org.projectlombok:lombok")
     runtimeOnly("org.postgresql:postgresql")
     annotationProcessor("org.projectlombok:lombok")

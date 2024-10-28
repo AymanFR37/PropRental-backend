@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+
+    <property name="LOGS" value="./logs" />
+
+    <!-- Console Appender -->
+    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%green(%date) %highlight(%-5level) %yellow([%-4relative]) %magenta([%thread]) %cyan(%logger{10}) %gray([%file:%line]) %blue(: %msg%n)</pattern>
+        </encoder>
+    </appender>
+
+    <!-- Rolling File Appender -->
+<!--    <appender name="RollingFile" class="ch.qos.logback.core.rolling.RollingFileAppender">-->
+<!--        <file>${LOGS}/spring-boot-logger.log</file>-->
+<!--        <encoder>-->
+<!--            <pattern>%d{yyyy-MM-dd HH:mm:ss} %p %C{1.} [%t] %m%n</pattern>-->
+<!--        </encoder>-->
+<!--        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">-->
+<!--            <fileNamePattern>${LOGS}/archived/spring-boot-logger-%d{yyyy-MM-dd}.log</fileNamePattern>-->
+<!--            <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">-->
+<!--                <maxFileSize>10MB</maxFileSize>-->
+<!--            </timeBasedFileNamingAndTriggeringPolicy>-->
+<!--        </rollingPolicy>-->
+<!--    </appender>-->
+
+    <!-- Root Logger -->
+    <root level="INFO">
+<!--        <appender-ref ref="RollingFile" />-->
+        <appender-ref ref="CONSOLE" />
+    </root>
+
+    <!-- Specific Logger for com.backend.proprental -->
+    <logger name="com.backend.proprental" level="TRACE" additivity="false">
+<!--        <appender-ref ref="RollingFile" />-->
+        <appender-ref ref="CONSOLE" />
+    </logger>
+
+</configuration>
