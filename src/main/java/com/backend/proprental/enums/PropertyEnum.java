@@ -9,8 +9,7 @@ public class PropertyEnum {
         APARTMENT(1, "Apartment"),
         HOUSE(2, "House"),
         VILLA(3, "Villa"),
-        ROOM(4, "Room"),
-        OTHER(5, "Other");
+        ROOM(4, "Room");
 
         private final String description;
         private final int value;

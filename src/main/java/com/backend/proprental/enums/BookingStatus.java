@@ -3,15 +3,16 @@ package com.backend.proprental.enums;
 import lombok.Getter;
 
 @Getter
-public enum UserStatus {
-    ACTIVE(1, "Active"),
-    PENDING(2, "Pending"),
-    DEACTIVATED(3, "Deactivated");
+public enum BookingStatus {
+    PENDING(1, "Pending"),
+    CONFIRMED(2, "Confirmed"),
+    CANCELLED(3, "Cancelled"),
+    COMPLETED(4, "Completed");
 
     private final Integer value;
     private final String label;
 
-    UserStatus(Integer value, String label) {
+    BookingStatus(Integer value, String label) {
         this.value = value;
         this.label = label;
     }
