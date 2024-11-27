@@ -5,6 +5,7 @@ import com.backend.proprental.payload.request.SignupRequest;
 import com.backend.proprental.payload.response.JwtResponse;
 import com.backend.proprental.payload.response.MessageResponse;
 import com.backend.proprental.service.UserService;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -18,11 +19,12 @@ public class AuthController {
 
     @PostMapping("/signup")
     public ResponseEntity<MessageResponse> signup(@RequestBody SignupRequest request) {
-        return ResponseEntity.ok(userService.register(request));
+        userService.register(request);
+        return ResponseEntity.ok(MessageResponse.builder().message("You have been registered successfully.").build());
     }
 
     @PostMapping("/login")
-    public ResponseEntity<JwtResponse> login(@RequestBody LoginRequest request) {
-        return ResponseEntity.ok(userService.login(request));
+    public ResponseEntity<JwtResponse> login(@RequestBody LoginRequest request, HttpServletResponse response) {
+        return ResponseEntity.ok(userService.login(request, response));
     }
 }
