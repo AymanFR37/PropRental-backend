@@ -32,10 +32,9 @@ public class WebSecurityConfig {
     private final AuthTokenFilter tokenFilter;
 
     private static final String[] WHITE_LIST_URL = {
-            "/auth/**",
             "/demo/**",
-            "/user/login",
-            "/user/signup",
+            "/auth/login",
+            "/auth/register",
             "/swagger-resources",
             "/swagger-resources/**",
             "/configuration/ui",

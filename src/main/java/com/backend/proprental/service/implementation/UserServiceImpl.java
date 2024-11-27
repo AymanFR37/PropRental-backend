@@ -11,6 +11,7 @@ import com.backend.proprental.security.jwt.JwtUtils;
 import com.backend.proprental.security.services.UserDetailsImpl;
 import com.backend.proprental.service.UserService;
 import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
@@ -80,5 +81,16 @@ public class UserServiceImpl implements UserService {
                         .accessToken(accessToken)
                         .roles(roles)
                         .build();
+    }
+
+    @Override
+    public void logout(HttpServletRequest request, HttpServletResponse response) {
+        SecurityContextHolder.clearContext();
+
+        Cookie accessTokenCookie = new Cookie("access_token", null);
+        accessTokenCookie.setHttpOnly(true);
+        accessTokenCookie.setMaxAge(0);
+        accessTokenCookie.setSecure(true);
+        response.addCookie(accessTokenCookie);
     }
 }
