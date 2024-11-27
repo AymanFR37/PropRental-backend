@@ -1,6 +1,7 @@
 package com.backend.proprental.security.services;
 
 import com.backend.proprental.entity.User;
+import com.backend.proprental.exception.ResourceNotFoundException;
 import com.backend.proprental.repository.UserRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -18,7 +19,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     @Transactional
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         User user = userRepository.findByEmailIgnoreCase(email)
-                .orElseThrow(() -> new UsernameNotFoundException("User Not Found with email: " + email));
+                .orElseThrow(() -> new ResourceNotFoundException("User Not Found with email: " + email));
         return UserDetailsImpl.build(user);
     }
 }

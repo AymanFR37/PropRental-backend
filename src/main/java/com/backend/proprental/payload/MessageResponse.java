@@ -1,4 +1,4 @@
-package com.backend.proprental.payload.response;
+package com.backend.proprental.payload;
 
 import lombok.Builder;
 import lombok.Data;

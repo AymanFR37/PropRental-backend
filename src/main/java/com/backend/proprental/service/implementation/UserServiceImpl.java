@@ -2,10 +2,10 @@ package com.backend.proprental.service.implementation;
 
 import com.backend.proprental.entity.User;
 import com.backend.proprental.enums.UserStatus;
+import com.backend.proprental.exception.DuplicatedValuesException;
 import com.backend.proprental.payload.request.LoginRequest;
 import com.backend.proprental.payload.request.SignupRequest;
 import com.backend.proprental.payload.response.JwtResponse;
-import com.backend.proprental.payload.response.MessageResponse;
 import com.backend.proprental.repository.UserRepository;
 import com.backend.proprental.security.jwt.JwtUtils;
 import com.backend.proprental.security.services.UserDetailsImpl;
@@ -36,7 +36,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public void register(SignupRequest request) {
         if (userRepository.existsByEmailIgnoreCase(request.getEmail())) {
-            throw new RuntimeException("Email already exists");
+            throw new DuplicatedValuesException("Email already exists");
         }
         User user = User.builder()
                 .firstName(request.getFirstName())
