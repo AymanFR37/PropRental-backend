@@ -16,7 +16,6 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import java.io.Serial;
 import java.io.Serializable;
 import java.time.LocalDateTime;
-import java.time.OffsetDateTime;
 
 @Getter
 @Setter
@@ -35,11 +34,11 @@ public abstract class DateAudit implements Serializable {
 
     @CreatedDate
     @Column(name = "creation_date", columnDefinition = "TIMESTAMP WITH TIME ZONE", nullable = false, updatable = false)
-    private OffsetDateTime creationDate;
+    private LocalDateTime creationDate;
 
     @LastModifiedDate
     @Column(name = "update_date", columnDefinition = "TIMESTAMP WITH TIME ZONE")
-    private OffsetDateTime updateDate;
+    private LocalDateTime updateDate;
 
     @Column(name = "deletion_date")
     private LocalDateTime deletionDate;

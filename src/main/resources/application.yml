@@ -38,3 +38,8 @@ logging:
   level:
     org.springframework.web: DEBUG
     org.hibernate: ERROR
+
+token:
+  app:
+    jwtSecret: mySuperSecretKeyForJWT1234
+    jwtExpirationMs: 3600000 # 1 hour for access token

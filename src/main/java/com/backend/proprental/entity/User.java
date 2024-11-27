@@ -7,19 +7,23 @@ import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
+import java.time.LocalDate;
+
 @Entity
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @SuperBuilder
-@Table(name = "users")
+@Table(name = "users", uniqueConstraints = {
+        @UniqueConstraint(columnNames = "email")
+})
 public class User extends AbstractEntity {
     @Column(name = "first_name", nullable = false, length = 56)
     private String firstName;
     @Column(name = "last_name", nullable = false, length = 56)
     private String lastName;
-    @Column(name = "email", nullable = false, unique = true, length = 156)
+    @Column(name = "email", nullable = false, unique = true, length = 50)
     private String email;
     @Column(name = "phone_number", nullable = false, length = 15)
     private String phoneNumber;
@@ -28,7 +32,7 @@ public class User extends AbstractEntity {
     @Column(name = "address", nullable = false)
     private String address;
     @Column(name = "birth_date", nullable = false)
-    private String birthDate;
+    private LocalDate birthDate;
     @Column(name = "image")
     private String image;
     @Enumerated(EnumType.STRING)
