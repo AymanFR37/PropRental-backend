@@ -18,6 +18,8 @@ import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
 
+import static com.backend.proprental.utils.immutable.AppConstants.BEARER;
+
 
 @RequiredArgsConstructor
 @Slf4j
@@ -57,7 +59,7 @@ public class AuthTokenFilter extends OncePerRequestFilter {
     private String parseJwt(HttpServletRequest request) {
         String headerAuth = request.getHeader("Authorization");
 
-        if (StringUtils.hasText(headerAuth) && headerAuth.startsWith("Bearer ")) {
+        if (StringUtils.hasText(headerAuth) && headerAuth.startsWith(BEARER)) {
             return headerAuth.substring(7);
         }
 

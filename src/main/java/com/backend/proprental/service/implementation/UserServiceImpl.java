@@ -27,6 +27,8 @@ import org.springframework.stereotype.Service;
 import java.io.IOException;
 import java.util.List;
 
+import static com.backend.proprental.utils.immutable.AppConstants.*;
+
 @Service
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
@@ -76,12 +78,12 @@ public class UserServiceImpl implements UserService {
         String refreshToken = jwtUtils.generateRefreshToken(userDetails.getUsername(), roles);
 
 
-        Cookie accessTokenCookie = new Cookie("access_token", accessToken);
+        Cookie accessTokenCookie = new Cookie(ACCESS_TOKEN, accessToken);
         accessTokenCookie.setHttpOnly(true);
         accessTokenCookie.setMaxAge(accessTokenExpiration / 1000);
         accessTokenCookie.setSecure(true);
 
-        Cookie refresTokenCookie = new Cookie("refresh_token", refreshToken);
+        Cookie refresTokenCookie = new Cookie(REFRESH_TOKEN, refreshToken);
         accessTokenCookie.setHttpOnly(true);
         accessTokenCookie.setMaxAge(refreshTokenExpiration / 1000);
         accessTokenCookie.setSecure(true);
@@ -102,12 +104,12 @@ public class UserServiceImpl implements UserService {
     public void logout(HttpServletRequest request, HttpServletResponse response) {
         SecurityContextHolder.clearContext();
 
-        Cookie accessTokenCookie = new Cookie("access_token", null);
+        Cookie accessTokenCookie = new Cookie(ACCESS_TOKEN, null);
         accessTokenCookie.setHttpOnly(true);
         accessTokenCookie.setMaxAge(0);
         accessTokenCookie.setSecure(true);
 
-        Cookie refreshTokenCookie = new Cookie("refresh_token", null);
+        Cookie refreshTokenCookie = new Cookie(REFRESH_TOKEN, null);
         accessTokenCookie.setHttpOnly(true);
         accessTokenCookie.setMaxAge(0);
         accessTokenCookie.setSecure(true);
@@ -121,7 +123,7 @@ public class UserServiceImpl implements UserService {
         final String headerAuth = request.getHeader(HttpHeaders.AUTHORIZATION);
         final String refreshToken;
         final String userEmail;
-        if (headerAuth!= null && headerAuth.startsWith("Bearer ")) {
+        if (headerAuth!= null && headerAuth.startsWith(BEARER)) {
             refreshToken = headerAuth.substring(7);
             userEmail = jwtUtils.extractUsername(refreshToken);
             if (userEmail != null) {
@@ -135,13 +137,13 @@ public class UserServiceImpl implements UserService {
                             .refreshToken(newRefreshToken)
                             .build();
 
-                    Cookie accessTokenCookie = new Cookie("access_token", accessToken);
+                    Cookie accessTokenCookie = new Cookie(ACCESS_TOKEN, accessToken);
                     accessTokenCookie.setHttpOnly(true);
                     accessTokenCookie.setMaxAge(accessTokenExpiration / 1000);
                     accessTokenCookie.setSecure(true);
                     response.addCookie(accessTokenCookie);
 
-                    Cookie refresTokenCookie = new Cookie("refresh_token", newRefreshToken);
+                    Cookie refresTokenCookie = new Cookie(REFRESH_TOKEN, newRefreshToken);
                     accessTokenCookie.setHttpOnly(true);
                     accessTokenCookie.setMaxAge(refreshTokenExpiration / 1000);
                     accessTokenCookie.setSecure(true);
