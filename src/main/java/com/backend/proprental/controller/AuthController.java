@@ -12,6 +12,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
+
 @RestController
 @RequestMapping("/auth")
 @RequiredArgsConstructor
@@ -30,10 +32,14 @@ public class AuthController {
         return ResponseEntity.ok(userService.login(request, response));
     }
 
-    // TODO : implement logout
     @PostMapping("/logout")
     public ResponseEntity<Void> logout(HttpServletRequest request, HttpServletResponse response) {
         userService.logout(request, response);
         return ResponseEntity.ok().build();
+    }
+
+    @PostMapping("/refresh")
+    public void refreshToken(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        userService.refreshToken(request, response);
     }
 }

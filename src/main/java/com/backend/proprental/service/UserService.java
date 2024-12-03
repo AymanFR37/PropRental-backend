@@ -6,6 +6,8 @@ import com.backend.proprental.payload.response.JwtResponse;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
+import java.io.IOException;
+
 public interface UserService {
 
     void register(SignupRequest request);
@@ -13,4 +15,6 @@ public interface UserService {
     JwtResponse login(LoginRequest request, HttpServletResponse response);
 
     void logout(HttpServletRequest request, HttpServletResponse response);
+
+    void refreshToken(HttpServletRequest request, HttpServletResponse response) throws IOException;
 }
