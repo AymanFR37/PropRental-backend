@@ -41,4 +41,8 @@ public class User extends AbstractEntity {
     @Enumerated(EnumType.STRING)
     @Column(name = "role", nullable = false)
     private Role role;
+    @Column(name = "email_verified", nullable = false)
+    private boolean emailVerified;
+    @Column(name = "phone_number_verified", nullable = false)
+    private boolean phoneNumberVerified;
 }

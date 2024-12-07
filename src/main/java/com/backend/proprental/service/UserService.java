@@ -3,6 +3,7 @@ package com.backend.proprental.service;
 import com.backend.proprental.payload.request.LoginRequest;
 import com.backend.proprental.payload.request.SignupRequest;
 import com.backend.proprental.payload.response.JwtResponse;
+import com.backend.proprental.payload.response.UserInfo;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
@@ -17,4 +18,8 @@ public interface UserService {
     void logout(HttpServletRequest request, HttpServletResponse response);
 
     void refreshToken(HttpServletRequest request, HttpServletResponse response) throws IOException;
+
+    UserInfo userInfo();
+
+    void checkEmail(String email);
 }

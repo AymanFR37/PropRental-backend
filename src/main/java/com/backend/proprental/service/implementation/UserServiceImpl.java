@@ -2,14 +2,17 @@ package com.backend.proprental.service.implementation;
 
 import com.backend.proprental.entity.User;
 import com.backend.proprental.enums.UserStatus;
+import com.backend.proprental.exception.BadRequestException;
 import com.backend.proprental.exception.DuplicatedValuesException;
 import com.backend.proprental.payload.request.LoginRequest;
 import com.backend.proprental.payload.request.SignupRequest;
 import com.backend.proprental.payload.response.JwtResponse;
+import com.backend.proprental.payload.response.UserInfo;
 import com.backend.proprental.repository.UserRepository;
 import com.backend.proprental.security.jwt.JwtUtils;
 import com.backend.proprental.security.services.UserDetailsImpl;
 import com.backend.proprental.service.UserService;
+import com.backend.proprental.utils.AuthenticationUtils;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
@@ -35,6 +38,7 @@ public class UserServiceImpl implements UserService {
     private final AuthenticationManager authenticationManager;
     private final JwtUtils jwtUtils;
     private final UserRepository userRepository;
+    private final AuthenticationUtils authenticationUtils;
 
     @Value("${token.app.jwtAccessToken.expirationMs}")
     private int accessTokenExpiration;
@@ -58,8 +62,11 @@ public class UserServiceImpl implements UserService {
                 .status(UserStatus.PENDING)
                 .birthDate(request.getBirthDate())
                 .role(request.getRole())
+                .emailVerified(false)
+                .phoneNumberVerified(false)
                 .build();
         userRepository.save(user);
+        // TODO : send email (welcome, code verification)
     }
 
     @Override
@@ -154,6 +161,32 @@ public class UserServiceImpl implements UserService {
 
                 }
         }
+        }
+    }
+
+    @Override
+    public UserInfo userInfo() {
+        var currentUser = authenticationUtils.getCurrentUser();
+        return UserInfo.builder()
+                .id(currentUser.getId())
+                .firstName(currentUser.getFirstName())
+                .lastName(currentUser.getLastName())
+                .email(currentUser.getEmail())
+                .image(currentUser.getImage())
+                .phoneNumber(currentUser.getPhoneNumber())
+                .birthDate(currentUser.getBirthDate().toString())
+                .address(currentUser.getAddress())
+                .role(currentUser.getRole().name())
+                .emailVerified(currentUser.isEmailVerified())
+                .phoneNumberVerified(currentUser.isPhoneNumberVerified())
+                .status(currentUser.getStatus().name())
+                .build();
+    }
+
+    @Override
+    public void checkEmail(String email) {
+        if (userRepository.existsByEmailIgnoreCase(email)) {
+            throw new BadRequestException("Email already exists");
         }
     }
 }
