@@ -26,6 +26,15 @@ spring:
         types.print.banner: false
         format_sql: true
 
+  mail:
+    host: ${MAIL_HOST:sandbox.smtp.mailtrap.io}
+    port: ${MAIL_PORT:2525}
+    username: ${MAIL_USERNAME:1c3b5dbd53576c}
+    password: ${MAIL_PASSWORD:be0fe5e67fa351}
+    properties:
+      mail.smtp.starttls.enable: true
+      mail.smtp.auth: true
+
 #logging:
 #  level:
 #    root: INFO
