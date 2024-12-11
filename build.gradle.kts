@@ -31,6 +31,7 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-security")
     implementation("io.jsonwebtoken:jjwt-api:$jwtVersion")
     implementation("org.springframework.boot:spring-boot-starter-validation")
+    implementation ("org.springframework.boot:spring-boot-starter-mail")
 //    implementation("ch.qos.logback:logback-classic:$logbackVersion")
 //    implementation("ch.qos.logback:logback-core:$logbackVersion")
 

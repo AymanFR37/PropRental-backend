@@ -8,6 +8,7 @@ import lombok.*;
 import lombok.experimental.SuperBuilder;
 
 import java.time.LocalDate;
+import java.time.OffsetDateTime;
 
 @Entity
 @Getter
@@ -45,4 +46,13 @@ public class User extends AbstractEntity {
     private boolean emailVerified;
     @Column(name = "phone_number_verified", nullable = false)
     private boolean phoneNumberVerified;
+    @Column(name = "reset_password_code")
+    private Integer resetPasswordCode;
+    @Column(name = "creation_date_reset_password_code")
+    private OffsetDateTime creationDateResetPassword;
+
+    @Transient
+    public String getFullName() {
+        return "%s %s".formatted(firstName, lastName);
+    }
 }

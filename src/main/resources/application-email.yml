@@ -1,2 +1,20 @@
 email:
   props:
+    send-reset-password-email:
+      subject: "Password Reset Request"
+      btn-text: ""
+      btn-link: ""
+      body-text: |
+        <div>
+          Hello [User's Name],
+          <br><br>
+          We have received a request to reset your password.
+          <br>
+          To reset your password, please use the following verification code:
+          <br><br>
+          <strong style="font-size: 18px; color: #007BFF;">[verificationCode]</strong>
+          <br><br>
+          This code is valid for 15 minutes. If you did not make this request, please ignore this email.
+          <br><br>
+          Best regards,
+        </div>

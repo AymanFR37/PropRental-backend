@@ -15,6 +15,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/auth")
@@ -54,6 +55,11 @@ public class AuthController {
     public ResponseEntity<Void> checkEmail(@RequestParam String email) {
         userService.checkEmail(email);
         return ResponseEntity.ok().build();
+    }
+
+    @GetMapping("/password")
+    public ResponseEntity<MessageResponse> forgotPassword(@RequestParam("email") String email) {
+        return ResponseEntity.ok(MessageResponse.builder().message(userService.forgotPassword(email)).build());
     }
 
 

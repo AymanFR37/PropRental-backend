@@ -28,7 +28,10 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
+import java.time.OffsetDateTime;
 import java.util.List;
+import java.util.Optional;
+import java.util.Random;
 
 import static com.backend.proprental.utils.immutable.AppConstants.*;
 
@@ -188,5 +191,20 @@ public class UserServiceImpl implements UserService {
         if (userRepository.existsByEmailIgnoreCase(email)) {
             throw new BadRequestException("Email already exists");
         }
+    }
+
+    @Override
+    public String forgotPassword(String email) {
+        Optional<User> user = userRepository.findByEmailIgnoreCase(email);
+        if (user.isEmpty()) {
+            throw new BadRequestException("No account exist with this mail.");
+        }
+        User existUser = user.get();
+        int verificationCode = new Random().nextInt(900000) + 100000;
+        existUser.setResetPasswordCode(verificationCode);
+        existUser.setCreationDateResetPassword(OffsetDateTime.now());
+        userRepository.save(existUser);
+        emailSenderService.sendPasswordResetEmail(existUser.getEmail(), String.valueOf(verificationCode), existUser.getFullName());
+        return "A password reset email has been sent.";
     }
 }

@@ -22,4 +22,6 @@ public interface UserService {
     UserInfo userInfo();
 
     void checkEmail(String email);
+
+    String forgotPassword(String email);
 }
